@@ -1,0 +1,72 @@
+{
+  "version": "2.0",
+  "logging": {
+    "logLevel": {
+
+      // ---- Per-invocation framework-generated logging
+      "Host.Triggers.DurableTask": "Information", // use this setting if you need analytics in the portal
+      //"Host.Triggers.DurableTask": "Warning", // use this setting otherwise
+
+      // ---- Per-invocation application-generated logging
+      "Function": "Information", // use this setting for small-scale debugging
+      //"Function": "Warning", // use this setting when running perf tests
+
+      // --- the levels below are used to control the Netherite tracing.
+      "DurableTask.Netherite": "Warning",
+      "DurableTask.Netherite.FasterStorage": "Warning",
+      "DurableTask.Netherite.EventHubsTransport": "Warning",
+      "DurableTask.Netherite.Events": "Warning",
+      "DurableTask.Netherite.WorkItems": "Warning",
+      "DurableTask.Netherite.Client": "Warning",
+      "DurableTask.Netherite.LoadMonitor": "Warning"
+    },
+    "applicationInsights": {
+      "samplingSettings": {
+        "isEnabled": true,
+        "excludedTypes": "Request"
+      }
+    }
+  },
+  "extensions": {
+    "durableTask": {
+
+      // The task hub name can be set explicitly
+      "hubName": "myawesomeapp-11",
+
+      // set this to true to reduce likelihood of duplicated work items   
+      "UseGracefulShutdown": "true",
+
+      // tweak these for performance tuning (work the same for all backends)
+      "maxConcurrentActivityFunctions": "100",
+      "maxConcurrentOrchestratorFunctions": "100",
+
+      "storageProvider": {
+
+        "type": "Netherite",
+
+        // the number of partitions to use. Cannot be changed after task hub is created.
+        "PartitionCount": "12",
+
+        // where to look for the connection strings
+        "StorageConnectionName": "AzureWebJobsStorage",
+        "EventHubsConnectionName": "EventHubsConnection"
+      },
+
+      // The log level limits below control the production of log events by the various components.
+      // it limits production, not just consumption, of the events, so it can be used to prevent overheads.
+      // "Debug" is a reasonable setting, as it allows troubleshooting without impacting perf too much.
+      "LogLevelLimit": "Debug",
+      "StorageLogLevelLimit": "Debug",
+      "TransportLogLevelLimit": "Debug",
+      "EventLogLevelLimit": "Debug",
+      "WorkItemLogLevelLimit": "Debug",
+      "ClientLogLevelLimit": "Debug",
+      "LoadMonitorLogLevelLimit": "Debug",
+
+      // the following can be used to collectd and direct trace output to additional specific sinks
+      // which is useful in a testing and debugging context, but not recommended for production
+      "TraceToConsole": false,
+      "TraceToBlob": false
+    }
+  }
+}
