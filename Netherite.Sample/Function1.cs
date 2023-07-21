@@ -11,7 +11,7 @@ namespace Netherite.Sample
 {
     public static class Function1
     {
-        [FunctionName("Function1")]
+        [FunctionName("Function2")]
         public static async Task<List<string>> RunOrchestrator(
             [OrchestrationTrigger] IDurableOrchestrationContext context)
         {
